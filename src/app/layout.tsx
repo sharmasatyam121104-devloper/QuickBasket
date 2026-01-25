@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import "./globals.css";
+import Provider from "@/components/Provider";
 
 
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-full min-h-screen bg-linear-to-br from-indigo-200 via-blue-100 to-cyan-200">
-        {children}
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   );
