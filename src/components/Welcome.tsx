@@ -4,8 +4,11 @@ import { ArrowRight, Bike, ShoppingBasket } from "lucide-react"
 import { Button } from 'antd';
 import 'animate.css';
 
+type propType = {
+    nextStep:(s:number)=>void
+}
 
-const Welcome = () => {
+const Welcome = ({nextStep}: propType) => {
   return (
     <div className="flex flex-col items-center justify-center md:p-8  min-h-screen ">
         <div className="space-y-4">
@@ -24,7 +27,7 @@ const Welcome = () => {
             <Bike size={100} className="text-green-500 animate__animated animate__backInLeft "/>
         </div>
         <div className="animate__animated animate__backInUp ">
-            <Button size="large" className="bg-indigo-600! text-white! hover:bg-white! hover:text-indigo-600! ">
+            <Button size="large" onClick={()=>nextStep(2)} className="bg-indigo-600! text-white! hover:bg-white! hover:text-indigo-600! ">
                 Register Now
                 <ArrowRight/>
             </Button>
