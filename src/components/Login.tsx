@@ -24,7 +24,21 @@ const Login = () => {
                 password: value.password
             })
             message.success("Login Successfully!")
-        } catch (error) {
+        } 
+        catch (error) {
+            return clientErrorHandler(error)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
+    const handleAuthWithGoogle = async() =>{
+        try {
+            setLoading(true)
+            await signIn("google")
+        } 
+        catch (error) {
             return clientErrorHandler(error)
         }
         finally {
@@ -85,7 +99,7 @@ const Login = () => {
                 <span className="text-gray-400 text-xs">OR</span>
                 <span className="h-px flex-1 bg-gray-400"></span>
             </div>
-            <Button className=' h-12! md:w-88! w-65' loading={loading} disabled={loading}>
+            <Button className=' h-12! md:w-88! w-65' loading={loading} disabled={loading} onClick={handleAuthWithGoogle}>
                 <GoogleOutlined className='text-lg'/>
                 <p className='text-sm'>Login with Google</p>
             </Button>

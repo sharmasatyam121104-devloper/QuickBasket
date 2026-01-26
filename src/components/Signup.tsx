@@ -5,6 +5,7 @@ import { GoogleOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 import { ArrowLeft } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -28,6 +29,19 @@ const Signup = ({nextStep}: propType) => {
             await axios.post('/api/auth/register',value)
             message.success("Registered Successfully!")
         } catch (error) {
+            return clientErrorHandler(error)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
+    const handleAuthWithGoogle = async() =>{
+        try {
+            setLoading(true)
+            await signIn("google")
+        } 
+        catch (error) {
             return clientErrorHandler(error)
         }
         finally {
@@ -108,7 +122,7 @@ const Signup = ({nextStep}: propType) => {
                 <span className="text-gray-400 text-xs">OR</span>
                 <span className="h-px flex-1 bg-gray-400"></span>
             </div>
-            <Button className=' h-12! md:w-88! w-65' loading={loading} disabled={loading}>
+            <Button className=' h-12! md:w-88! w-65' loading={loading} disabled={loading} onClick={handleAuthWithGoogle}>
                 <GoogleOutlined className='text-lg'/>
                 <p className='text-sm'>Continue with Google</p>
             </Button>

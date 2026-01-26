@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 interface IUser {
     name: string;
     email: string;
-    password: string;
+    password?: string;
     mobile?: string;
-    role: "user" | "deliveryBoy" | "admin"
+    role: "user" | "deliveryBoy" | "admin";
+    image?: string;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -23,7 +24,7 @@ const userSchema = new mongoose.Schema<IUser>({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
         select: false,
     },
     mobile: {
@@ -35,7 +36,11 @@ const userSchema = new mongoose.Schema<IUser>({
         type: String,
         enum: ["user", "deliveryBoy", "admin"],
         default: "user",
-    }
+    },
+    image: {
+        type: String,
+        required: false,
+    },
 },{timestamps:true})
 
 const UserModel = mongoose.models.User || mongoose.model("User", userSchema)
