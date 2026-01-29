@@ -92,7 +92,7 @@ const Login = () => {
 
             {/* Submit */}
             <Form.Item>
-                <Button type="primary" htmlType="submit" block className='h-12!' loading={loading} >
+                <Button type="primary" htmlType="submit" block className='h-12!' loading={loading} disabled={loading}>
                     Login Now
                 </Button>
             </Form.Item>
@@ -102,7 +102,7 @@ const Login = () => {
                 <span className="text-gray-400 text-xs">OR</span>
                 <span className="h-px flex-1 bg-gray-400"></span>
             </div>
-            <Button className=' h-12! md:w-88! w-65' loading={loading} onClick={handleAuthWithGoogle}>
+            <Button className=' h-12! md:w-88! w-65' loading={loading} disabled={loading} onClick={handleAuthWithGoogle}>
                 <GoogleOutlined className='text-lg'/>
                 <p className='text-sm'>Login with Google</p>
             </Button>

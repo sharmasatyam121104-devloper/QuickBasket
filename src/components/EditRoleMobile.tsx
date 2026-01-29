@@ -25,6 +25,7 @@ const EditRoleMobile = () => {
       if(!mobile || !selectedRole) {
         return message.warning("Role and Mobile both are required.")
       }
+      
       setLoading(true)
       await axios.post('/api/user/edit-role-mobile', {mobile, role:selectedRole})
       message.info("Your profile verification completed.")
@@ -46,10 +47,10 @@ const EditRoleMobile = () => {
           role.map((item,index:number)=>{
             return(
               <Card key={index} 
-              onClick={()=>setSelectedRole(item.role)}
-              hoverable 
-              className= {`w-40 h-40 flex flex-col items-center justify-center  gap-2 ${selectedRole === item.role ? "border-6! border-indigo-500!" : ""}`}
-              >
+                onClick={()=>setSelectedRole(item.role)}
+                hoverable 
+                className= {`w-40 h-40 flex flex-col items-center justify-center  gap-2 ${selectedRole === item.role ? "border-6! border-indigo-500!" : ""}`}
+                >
                 <h1 className=' w-full font-bold'>{item.lable}</h1>
                 <div className='w-full flex justify-center'>{item.icon}</div>
               </Card>
@@ -68,12 +69,12 @@ const EditRoleMobile = () => {
             ]}
             >
             <Input
-            type="tel"
-            placeholder="Enter mobile number"
-            maxLength={10}
-            className='ml-2!'
-            onChange={(e)=>setMobile(e.target.value)}
-          />
+              type="tel"
+              placeholder="Enter mobile number"
+              maxLength={10}
+              className='ml-2!'
+              onChange={(e)=>setMobile(e.target.value)}
+            />
           </Form.Item>
         </Form>
       </div>
