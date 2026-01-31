@@ -1,11 +1,12 @@
 "use client"
 
-import {  CloseOutlined, LogoutOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import {  CloseOutlined, LogoutOutlined, MenuOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge,  Button,  Dropdown, Input, MenuProps } from "antd";
-import {  Search, ShoppingBag } from "lucide-react";
+import {  PlusCircle, Search, SendToBack, ShoppingBag } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import MobileSidebar from "./MobileSideBar";
 
 interface IUser {
     _id:string,
@@ -20,7 +21,9 @@ interface IUser {
 
 
 const Nav = ({user}:{user:IUser}) => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showSearch, setShowSearch] = useState(false)
+    // const router = useRouter()
 
    const items: MenuProps["items"] = [
     {
@@ -53,9 +56,13 @@ const Nav = ({user}:{user:IUser}) => {
         ),
         disabled: true,
     },
+
+    user.role=== "user" ?
     {
         type: "divider",
-    },
+    }: null,
+
+    user.role=== "user" ?
     {
         key:"order",
         label: (
@@ -66,7 +73,8 @@ const Nav = ({user}:{user:IUser}) => {
                 </span>
             </Link>
         )
-    },
+    } 
+    : null,
     {
         type: "divider",
     },
@@ -89,21 +97,43 @@ const Nav = ({user}:{user:IUser}) => {
     <>
     <div className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 flex md:gap-2   md:mx-2 mx-1 my-1 p-4 md:px-16 justify-between rounded-2xl sticky z-10">
         <p className="md:text-3xl text-2xl font-bold text-white">QuickBasket</p>
-        <div className="hidden sm:block w-95">
-            <Input
-            placeholder="Search your product..!"
-            prefix={<Search />}
-            size="large"
-            className="w-95!"
-        />
-        </div>
-        <div className="block md:hidden text-white " onClick={()=>setShowSearch(!showSearch)}>
-            <Search  className="h-8 w-8 my-auto"/>
-        </div>
+        {
+            user.role === "user" &&
+            <div className="hidden sm:block w-95">
+                <Input
+                placeholder="Search your product..!"
+                prefix={<Search />}
+                size="large"
+                className="w-95!"
+            />
+            </div>
+        }
+        {
+            user.role === "user" &&
+             <div className="block md:hidden text-white " onClick={()=>setShowSearch(!showSearch)}>
+                <Search  className="h-8 w-8 my-auto"/>
+            </div>
+        }
+        {
+            user.role === "admin" &&
+             <div className="block md:hidden text-white ml-auto px-2" onClick={() => setSidebarOpen(true)}>
+                <Button
+                icon={<MenuOutlined />}
+                />         
+            </div>
+        }
         <div className="flex gap-4 justify-center items-center">
-            <Badge count={2} showZero className="bg-white rounded-full p-1!">
-                <ShoppingCartOutlined style={{ fontSize: 24 }} />
-            </Badge> 
+            {
+                user.role === "user" ?
+                <Badge count={2} showZero className="bg-white rounded-full p-1!">
+                    <ShoppingCartOutlined style={{ fontSize: 24 }} />
+                </Badge> :
+                <div className=" md:block hidden gap-4 space-x-4">
+                    <Link href={'/'}><Button  className="h-10! rounded-3xl!"><PlusCircle size={14}/>Add Groceries</Button></Link>
+                    <Link href={'/'}><Button className="h-10! rounded-3xl!"><ShoppingBag size={14}/>Viwe Groceries</Button></Link>
+                    <Link href={'/'}><Button className="h-10! rounded-3xl!"><SendToBack size={14}/>Manage Order&apos;s</Button></Link>
+                </div>
+            }
             <Dropdown
                 menu={{ items }}
                 trigger={["hover"]}
@@ -125,6 +155,16 @@ const Nav = ({user}:{user:IUser}) => {
                 className="w-82! mt-1 h-12"
             />
         </div>
+    }
+    {
+        user.role === "admin" &&
+        <div>
+      {/* Sidebar */}
+      <MobileSidebar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+    </div>
     }
     </>
   )
