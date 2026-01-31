@@ -129,7 +129,7 @@ const Nav = ({user}:{user:IUser}) => {
                     <ShoppingCartOutlined style={{ fontSize: 24 }} />
                 </Badge> :
                 <div className=" md:block hidden gap-4 space-x-4">
-                    <Link href={'/'}><Button  className="h-10! rounded-3xl!"><PlusCircle size={14}/>Add Groceries</Button></Link>
+                    <Link href={'/admin/add-grocery'}><Button  className="h-10! rounded-3xl!"><PlusCircle size={14}/>Add Groceries</Button></Link>
                     <Link href={'/'}><Button className="h-10! rounded-3xl!"><ShoppingBag size={14}/>Viwe Groceries</Button></Link>
                     <Link href={'/'}><Button className="h-10! rounded-3xl!"><SendToBack size={14}/>Manage Order&apos;s</Button></Link>
                 </div>

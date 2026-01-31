@@ -23,7 +23,7 @@ const MobileSidebar = ({ open, onClose }: MobileSidebarProps) => {
         items={[
           {
             key: "add",
-            label: <div  className="flex! items-center! gap-2 text-lg font-medium h-44! "><PlusCircle size={24}/>Add Groceries</div>,
+            label: <Link href={'/admin/add-grocery'} className="flex! items-center! gap-2 text-lg font-medium h-44! "><PlusCircle size={24}/>Add Groceries</Link>,
           },
           {
             key: "viwe",
