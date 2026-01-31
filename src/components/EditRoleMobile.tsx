@@ -7,8 +7,11 @@ import axios from 'axios'
 import {  Motorbike, Save, User, UserStar } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useSession } from 'next-auth/react';
 
 const EditRoleMobile = () => {
+    const session = useSession()
+    console.log(session);
   const role = [
     {role: "user", lable: "User", icon:<User />},
     {role: "admin", lable: "Admin", icon:<UserStar />},
@@ -19,6 +22,7 @@ const EditRoleMobile = () => {
   const [mobile, setMobile] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const {update} = useSession()
 
   const handleEditRoleAndMobile = async()=>{
     try {
@@ -28,6 +32,7 @@ const EditRoleMobile = () => {
       
       setLoading(true)
       await axios.post('/api/user/edit-role-mobile', {mobile, role:selectedRole})
+      await update({role: selectedRole})
       message.info("Your profile verification completed.")
       router.push('/')
     } 

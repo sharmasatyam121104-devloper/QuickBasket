@@ -30,6 +30,24 @@ export const proxy = async (req: NextRequest) => {
     return NextResponse.redirect(new URL("/login", req.url))
   }
 
+  // Middleware Role-based Redirection
+  const role = token?.role;
+
+  // 1. Check for User routes
+  if (pathname.startsWith("/user") && role !== "user") {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
+
+  // 2. Check for Delivery routes
+  if (pathname.startsWith("/delivery") && role !== "deliveryBoy") {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
+
+  // 3. Check for Admin routes 
+  if (pathname.startsWith("/admin") && role !== "admin") {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
+
   return NextResponse.next()
 }
 export const config = {

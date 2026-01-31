@@ -1,0 +1,40 @@
+import { v2 as cloudinary } from 'cloudinary'
+import serverErrorHandler from './serverErrorHandler';
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export const uploadOnCloudinary = async(file: Blob): Promise<string | null>=>{
+    if(!file) {
+        return null
+    }
+
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        return await new Promise((resolve, reject) => {
+        cloudinary.uploader
+            .upload_stream(
+            {
+                folder: "groceries",
+                resource_type: "image",
+            },
+            (error, result) => {
+                if (error) reject(error);
+                resolve(result?.secure_url || null);
+            }
+            )
+            .end(buffer);
+        });
+    } 
+    catch(error) {
+        serverErrorHandler(error, {
+        message: "Cloudinary image upload failed",
+        });
+        return null;
+    }
+}
