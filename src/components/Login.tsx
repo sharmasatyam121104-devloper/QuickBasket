@@ -18,36 +18,40 @@ const Login = () => {
 //   console.log(session);
 
     //Login logic here
-    const handleLogin = async(value: handleLoginInterface)=>{
+    const handleLogin = async (value: handleLoginInterface) => {
         try {
-            setLoading(true)
-            await signIn("credentials",{
-                email: value.email,
-                password: value.password
-            })
-            message.success("Login Successfully!")
-            router.push('/')
-        } 
-        catch (error) {
-            return clientErrorHandler(error)
-        }
-        finally {
-            setLoading(false)
-        }
-    }
+            setLoading(true);
 
-    const handleAuthWithGoogle = async() =>{
-        try {
-            setLoading(true)
-            await signIn("google",{callbackUrl: "/"})
-        } 
-        catch (error) {
-            return clientErrorHandler(error)
+            const result = await signIn("credentials", {
+            email: value.email,
+            password: value.password,
+            redirect: false, // 🔥 IMPORTANT
+            });
+
+            if (result?.error) {
+                message.error("Invalid email or password");
+                return;
+            }
+
+            message.success("Login successfully!");
+            router.push("/");
+        } catch (error) {
+            clientErrorHandler(error);
+        } finally {
+            setLoading(false);
         }
-        finally {
-            setLoading(false)
-        }
+    };
+
+    const handleAuthWithGoogle = async () => {
+    try {
+        setLoading(true);
+        await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+        clientErrorHandler(error);
+    } finally {
+        setLoading(false);
     }
+    };
 
   return (
     <div className='flex flex-col items-center justify-center md:p-8  min-h-screen w-full relative'>
