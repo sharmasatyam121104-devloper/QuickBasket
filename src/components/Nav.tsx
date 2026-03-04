@@ -95,7 +95,7 @@ const Nav = ({user}:{user:IUser}) => {
     ]
   return (
     <>
-    <div className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 flex md:gap-2   md:mx-2 mx-1 my-1 p-4 md:px-16 justify-between rounded-2xl sticky z-10">
+    <div className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 flex md:gap-2   md:mx-2 mx-1 my-1 p-4 md:px-16 justify-between rounded-2xl sticky top-5 z-50">
         <p className="md:text-3xl text-2xl font-bold text-white">QuickBasket</p>
         {
             user.role === "user" &&
