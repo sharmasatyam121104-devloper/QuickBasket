@@ -27,6 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return null
             }
             
+            console.log("DB USER:", user)
 
             return {
                 id: user._id.toString(),
@@ -34,6 +35,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 name: user.name,
                 role: user.role,
             }
+             
         }
 
     }),
@@ -51,10 +53,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 dbUser= await UserModel.create({
                     name:user.name,
                     email: user.email,
-                    image: user.image
+                    image: user.image,
+                    role: "user",
                 })
             }
             user.id = dbUser._id.toString()
+            user.role = dbUser.role
         }
 
         return true

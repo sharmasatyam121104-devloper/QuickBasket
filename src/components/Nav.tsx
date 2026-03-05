@@ -128,9 +128,11 @@ const Nav = ({user}:{user:IUser}) => {
         <div className="flex gap-4 justify-center items-center">
             {
                 user.role === "user" ?
-                <Badge count={cartData.length} showZero className="bg-white rounded-full p-1!">
-                    <ShoppingCartOutlined style={{ fontSize: 24 }} />
-                </Badge> :
+                <Link href={"/user/cart"}>
+                    <Badge count={cartData.length} showZero className="bg-white rounded-full p-1!">
+                        <ShoppingCartOutlined style={{ fontSize: 24 }} />
+                    </Badge>
+                </Link> :
                 <div className=" md:block hidden gap-4 space-x-4">
                     <Link href={'/admin/add-grocery'}><Button  className="h-10! rounded-3xl!"><PlusCircle size={14}/>Add Groceries</Button></Link>
                     <Link href={'/'}><Button className="h-10! rounded-3xl!"><ShoppingBag size={14}/>Viwe Groceries</Button></Link>

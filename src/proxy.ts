@@ -9,6 +9,9 @@ export const proxy = async (req: NextRequest) => {
     secret: process.env.AUTH_SECRET,
   })
 
+  console.log("TOKEN:", token)
+console.log("ROLE:", token?.role)
+console.log("PATH:", pathname)
   //  Auth pages
   const authPages = ["/login", "/register"]
 
