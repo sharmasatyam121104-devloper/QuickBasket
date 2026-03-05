@@ -7,6 +7,8 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import MobileSidebar from "./MobileSideBar";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface IUser {
     _id:string,
@@ -23,6 +25,7 @@ interface IUser {
 const Nav = ({user}:{user:IUser}) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showSearch, setShowSearch] = useState(false)
+    const {cartData} = useSelector((state: RootState)=>state.cart)
     // const router = useRouter()
 
    const items: MenuProps["items"] = [
@@ -125,7 +128,7 @@ const Nav = ({user}:{user:IUser}) => {
         <div className="flex gap-4 justify-center items-center">
             {
                 user.role === "user" ?
-                <Badge count={2} showZero className="bg-white rounded-full p-1!">
+                <Badge count={cartData.length} showZero className="bg-white rounded-full p-1!">
                     <ShoppingCartOutlined style={{ fontSize: 24 }} />
                 </Badge> :
                 <div className=" md:block hidden gap-4 space-x-4">
